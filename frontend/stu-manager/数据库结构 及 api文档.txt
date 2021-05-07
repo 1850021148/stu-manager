@@ -1,0 +1,150 @@
+## 数据库设计
+
+  ### 管理员账户表
+    "name": "juln", // 管理员账户名
+    "password": "juln", // 管理员密码
+
+  ### 学生信息表
+    "sno": "1801130161", // 学号, 必须是10位数的字符串
+    "sname": "juln", // 学生姓名
+    "sex": "male", // 性别, "male" or "female"
+    "age": "20", // 年龄
+    "pro": "软件工程", // 专业
+    "address": "晋江" // 住址
+
+
+## api说明书
+
+  ### 登录注册模块
+
+    1. 登录
+      url: /login
+      method: post
+      body:
+        {
+          name: "juln", // 管理员账户名
+          password: "juln", // 管理员密码
+        }
+      response:
+        {
+          data: {
+            msg: "success", // "success" or "error"
+          }
+        }
+
+    2. 注册
+      url: /register
+      method: post
+      body:
+        {
+          name: "juln", // 管理员账户名
+          password: "juln", // 管理员密码
+        }
+      response:
+        {
+          data: {
+            msg: "success", // "success" or "existed"
+          }
+        }
+
+  ### 学生管理模块 (全部功能都需要登录)
+
+    1. 创建新的学生信息
+      url: /manager/new
+      method: post
+      body:
+        {
+          "sno": "1801130161", // 学号, 必须是10位数的字符串
+          "sname": "juln", // 学生姓名
+          "sex": "male", // 性别, "male" or "female"
+          "age": "20", // 年龄
+          "pro": "软件工程", // 专业
+          "address": "晋江" // 住址
+        }
+      response:
+        {
+          data: {
+            msg: 'success', // or 'error'
+          }
+        }
+
+    2. 通过学号或姓名查询学生
+      url: /manager/findStuBySnoOrSname
+      method: get
+      query:
+        keyword 学号或姓名
+      response:
+        {
+          "data": {
+            "sno": "1801130161",
+            "sname": "juln",
+            "sex": "male",
+            "age": "20",
+            "pro": "软件工程",
+            "address": "晋江"
+          }
+        }
+        
+    3. 分页查询学生信息
+      url: /manager/find
+      method: get
+      query:
+        startIndex 从数据库中的第几条数据开始查询(从0开始)
+        size 查询多少条数据
+      response:
+        {
+          data: [
+            {
+              "sno": "1801130161", // 学号, 必须是10位数的字符串
+              "sname": "juln", // 学生姓名
+              "sex": "male", // 性别, "male" or "female"
+              "age": "20", // 年龄
+              "pro": "软件工程", // 专业
+              "address": "晋江" // 住址
+            },
+            {
+              ....
+            },
+            ......
+          ]
+        }
+
+    4. 获取数据库中的学生信息的总数目
+      url: /manager/getTotalNo
+      method: get
+      response:
+        {
+          data: {
+            number: 57,
+          }
+        }
+
+    5. 修改学生信息
+      url: /manager/update
+      method: post
+      query:
+        sno: "1801130110",
+        beforeSno: "18011301300", 修改前的学号, 以此查到要修改的那一行
+        sname: "sb",
+        sex: "male",
+        age: "20",
+        pro: "嫖娼专业",
+        address: "厕所"
+      response:
+        {
+          data: {
+            msg: 'success', // 'success' or 'error'
+          }
+        }
+
+    6. 通过学号删除学生信息
+      url: /manager/delete
+      method: get
+      query:
+        sno 学号
+      response:
+        {
+          data: {
+            msg: 'success', // 'success' or 'error'
+          }
+        }

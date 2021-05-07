@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>数据库数据获取</title>
+</head>
+<body>
+  <h1><span>共</span> <span class="num">0</span> <span> 条数据</span></h1>
+  <br />
+  <div class="content">
+
+  </div>
+</body>
+<script>
+  for (let i = 0; i < 7; i++) {
+    let str = ''
+    fetch('http://mengxuegu.com:7300/mock/5fc12195a528522f7959e270/stuManager/manager/find')
+    .then(res => res.json())
+    .then(res => {
+      res.data.forEach(item => {
+        // 1801130111,sb,male,20,嫖娼专业,厕所
+        str += `${item.sno},${item.sname},${item.sex},${item.age},${item.pro},${item.address}
+  `
+        document.querySelector('h1>.num').innerText = document.querySelector('h1>.num').innerText * 1 + 1
+      })
+      document.querySelector('.content').innerText += str
+    })
+  }
+</script>
+</html>
